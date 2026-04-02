@@ -53,8 +53,8 @@ export default function Navbar() {
           {/* Logo */}
           <div className="flex items-center z-10 flex-1">
             <Link href="/" aria-label="Tidymimo Home" className="transition-transform hover:scale-105 active:scale-95">
-              <Image src="/assets/LogoNoBgTextBlack.png" alt="Tidy Mimo Logo" width={110} height={30} className="logo-light object-contain" priority />
-              <Image src="/assets/LogoNoBgTextWhite.png" alt="Tidy Mimo Logo" width={110} height={30} className="logo-dark object-contain" priority />
+              <Image src="/assets/LogoNoBgTextBlack.png" alt="Tidy Mimo Logo" width={110} height={30} className="logo-light object-contain" priority style={{ height: 'auto' }} />
+              <Image src="/assets/LogoNoBgTextWhite.png" alt="Tidy Mimo Logo" width={110} height={30} className="logo-dark object-contain" priority style={{ height: 'auto' }} />
             </Link>
           </div>
           
@@ -106,8 +106,8 @@ export default function Navbar() {
         `}
       >
         <div className="flex justify-between items-center mb-12">
-          <Image src="/assets/LogoNoBgTextBlack.png" alt="Tidy Mimo Logo" width={100} height={26} className="logo-light object-contain" />
-          <Image src="/assets/LogoNoBgTextWhite.png" alt="Tidy Mimo Logo" width={100} height={26} className="logo-dark object-contain" />
+          <Image src="/assets/LogoNoBgTextBlack.png" alt="Tidy Mimo Logo" width={100} height={26} className="logo-light object-contain" style={{ height: 'auto' }} />
+          <Image src="/assets/LogoNoBgTextWhite.png" alt="Tidy Mimo Logo" width={100} height={26} className="logo-dark object-contain" style={{ height: 'auto' }} />
           <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-text-primary">
             <X size={24} />
           </button>

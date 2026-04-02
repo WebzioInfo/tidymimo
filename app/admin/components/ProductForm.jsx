@@ -28,11 +28,38 @@ export default function ProductForm({ initialProduct = null, initialSeo = null, 
     category: initialProduct?.category || 'household',
     description: initialProduct?.description || '',
     imageUrl: initialProduct?.imageUrl || '',
+    quantity: initialProduct?.quantity || '',
+    unit: initialProduct?.unit || 'Litres',
     slug: initialProduct?.slug || '',
     inStock: initialProduct?.inStock !== undefined ? initialProduct.inStock : true,
     sortOrder: initialProduct?.sortOrder || 0,
     features: (initialProduct?.features || []).join(', '),
   });
+
+  const [uploading, setUploading] = useState(false);
+
+  async function handleImageUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    setError('');
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const res = await axios.post('/api/admin/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      setProduct(p => ({ ...p, imageUrl: res.data.url }));
+      setSuccess('Image uploaded successfully!');
+      setTimeout(() => setSuccess(''), 3000);
+    } catch (err) {
+      setError('Image upload failed.');
+    } finally {
+      setUploading(false);
+    }
+  }
 
   // SEO fields
   const [seo, setSeo] = useState({
@@ -182,14 +209,50 @@ export default function ProductForm({ initialProduct = null, initialSeo = null, 
               />
             </div>
 
-            <div className="flex flex-col gap-2 mb-4 md:mb-6">
-              <label className="text-[0.85rem] font-bold text-[#6C2A79]">Image URL *</label>
-              <input 
-                id="product-image" type="text" required value={product.imageUrl} 
-                className="w-full px-4 py-3 rounded-xl border-[1.5px] border-[#D9A8E8]/50 text-[0.95rem] outline-none text-[#1A0A1D] focus:border-[#D41479] transition-colors"
-                onChange={e => setProduct(p => ({ ...p, imageUrl: e.target.value }))}
-                placeholder="/products/product-name.png" 
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
+              <div className="flex flex-col gap-2">
+                <label className="text-[0.85rem] font-bold text-[#6C2A79]">Image URL *</label>
+                <div className="flex gap-2">
+                  <input 
+                    id="product-image" type="text" required value={product.imageUrl} 
+                    className="flex-1 px-4 py-3 rounded-xl border-[1.5px] border-[#D9A8E8]/50 text-[0.95rem] outline-none text-[#1A0A1D] focus:border-[#D41479] transition-colors"
+                    onChange={e => setProduct(p => ({ ...p, imageUrl: e.target.value }))}
+                    placeholder="/products/product-name.png" 
+                  />
+                  <label className={`
+                    px-4 py-3 rounded-xl bg-[#6C2A79]/10 text-[#6C2A79] font-bold text-sm cursor-pointer hover:bg-[#6C2A79]/20 transition-all flex items-center gap-2 whitespace-nowrap
+                    ${uploading ? 'opacity-50 cursor-not-allowed' : ''}
+                  `}>
+                    {uploading ? '⌛ Uploading...' : '📁 Upload Image'}
+                    <input type="file" className="hidden" onChange={handleImageUpload} disabled={uploading} accept="image/*" />
+                  </label>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="flex flex-col gap-2">
+                  <label className="text-[0.85rem] font-bold text-[#6C2A79]">Quantity</label>
+                  <input 
+                    id="product-quantity" type="text" value={product.quantity} 
+                    className="w-full px-4 py-3 rounded-xl border-[1.5px] border-[#D9A8E8]/50 text-[0.95rem] outline-none text-[#1A0A1D] focus:border-[#D41479] transition-colors"
+                    onChange={e => setProduct(p => ({ ...p, quantity: e.target.value }))}
+                    placeholder="e.g. 5 or 500" 
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="text-[0.85rem] font-bold text-[#6C2A79]">Unit</label>
+                  <select 
+                    id="product-unit" value={product.unit} 
+                    className="w-full px-4 py-3 rounded-xl border-[1.5px] border-[#D9A8E8]/50 text-[0.95rem] outline-none text-[#1A0A1D] bg-white cursor-pointer focus:border-[#D41479] transition-colors appearance-none"
+                    onChange={e => setProduct(p => ({ ...p, unit: e.target.value }))}
+                  >
+                    <option value="Litres">Litres</option>
+                    <option value="KGs">KGs</option>
+                    <option value="ml">ml</option>
+                    <option value="Grams">Grams</option>
+                  </select>
+                </div>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">

@@ -1,4 +1,4 @@
-import ProductForm from '../../../about/components/ProductForm';
+import ProductForm from '../../components/ProductForm';
 
 export const metadata = {
   title: 'Add Product | Tidy Mimo Admin',

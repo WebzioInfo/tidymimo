@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Product {
@@ -14,6 +15,8 @@ model Product {
   features    String[]
   description String
   imageUrl    String
+  quantity    String?     // e.g. "5", "500"
+  unit        String?     // e.g. "Litres", "KGs"
   slug        String?     @unique
   inStock     Boolean     @default(true)
   sortOrder   Int         @default(0)

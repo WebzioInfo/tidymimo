@@ -180,16 +180,25 @@ export default function Products() {
                         ))}
                       </div>
                       
-                      <h3 className="text-2xl font-black mb-3 text-text-primary tracking-tight leading-none group-hover:text-primary-pink transition-colors">
+                      <h3 className="text-2xl font-black mb-1 text-text-primary tracking-tight leading-none group-hover:text-primary-pink transition-colors">
                         {item.name}
                       </h3>
+
+                      {item.quantity && (
+                        <div className="text-xs font-bold text-primary-purple/70 mb-3 flex items-center gap-1.5">
+                          <Sparkles size={12} className="text-primary-pink" />
+                          {item.quantity} {item.unit}
+                        </div>
+                      )}
                       
                       <p className="text-sm text-text-secondary leading-relaxed mb-8 flex-1">
                         {item.description || item.desc}
                       </p>
 
                       <a 
-                        href={`https://wa.me/918593940001?text=${encodeURIComponent(`Hi! I would like to request more details about ${item.name}.`)}`}
+                        href={`https://wa.me/918593940001?text=${encodeURIComponent(
+                          `Hi! I would like to request more details about ${item.name}${item.quantity ? ` (${item.quantity} ${item.unit})` : ''}.\n\nProduct Image: ${typeof window !== 'undefined' ? window.location.origin : ''}${item.imageUrl || item.image}`
+                        )}`}
                         target="_blank"
                         rel="noreferrer"
                         className="mt-auto w-full py-4 px-6 text-sm font-bold border border-primary-pink text-primary-pink rounded-2xl flex justify-between items-center group/btn hover:bg-primary-pink hover:text-white transition-all duration-300"

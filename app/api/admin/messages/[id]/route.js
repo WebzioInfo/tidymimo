@@ -6,7 +6,7 @@ export async function PATCH(request, { params }) {
   const admin = requireAdmin(request);
   if (!admin) return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
 
-  const { id } = params;
+  const { id } = await params;
 
   try {
     const body = await request.json();
@@ -27,7 +27,7 @@ export async function DELETE(request, { params }) {
   const admin = requireAdmin(request);
   if (!admin) return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
 
-  const { id } = params;
+  const { id } = await params;
 
   try {
     await prisma.contactMessage.delete({

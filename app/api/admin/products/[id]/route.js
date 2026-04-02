@@ -10,7 +10,7 @@ export async function PUT(request, { params }) {
   try {
     const { id } = await params;
     const body = await request.json();
-    const { name, category, features, description, imageUrl, slug, inStock, sortOrder } = body;
+    const { name, category, features, description, imageUrl, slug, inStock, sortOrder, unit, quantity } = body;
 
     const product = await prisma.product.update({
       where: { id },
@@ -20,6 +20,8 @@ export async function PUT(request, { params }) {
         ...(features !== undefined && { features: Array.isArray(features) ? features : [] }),
         ...(description !== undefined && { description }),
         ...(imageUrl !== undefined && { imageUrl }),
+        ...(unit !== undefined && { unit: unit || null }),
+        ...(quantity !== undefined && { quantity: quantity || null }),
         ...(slug !== undefined && { slug: slug || null }),
         ...(inStock !== undefined && { inStock }),
         ...(sortOrder !== undefined && { sortOrder }),

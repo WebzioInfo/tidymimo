@@ -26,8 +26,12 @@ export async function POST(request) {
       data: { name, email, message }
     });
 
-    // Send the email using the central mailer component
-    await sendContactEmail({ name, email, message });
+    // Send the email (catch to prevent 500 on SMTP error during dev)
+    try {
+      await sendContactEmail({ name, email, message });
+    } catch (mailErr) {
+      console.warn('[CONTACT-MAIL-ERROR] Email failed to send, but data was saved to DB:', mailErr.message);
+    }
 
     return NextResponse.json({ success: true, message: 'Message sent successfully.' });
   } catch (err) {

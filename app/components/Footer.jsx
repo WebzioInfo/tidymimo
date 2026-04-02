@@ -18,8 +18,8 @@ export default function Footer() {
       
       <div className="container mx-auto max-w-[1300px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 relative z-10">
         <div className="flex flex-col gap-6">
-          <Image src="/assets/LogoNoBgTextBlack.png" alt="Tidy Mimo Logo" width={130} height={35} className="logo-light object-contain" priority />
-          <Image src="/assets/LogoNoBgTextWhite.png" alt="Tidy Mimo Logo" width={130} height={35} className="logo-dark object-contain" priority />
+          <Image src="/assets/LogoNoBgTextBlack.png" alt="Tidy Mimo Logo" width={130} height={35} className="logo-light object-contain" priority style={{ height: 'auto' }} />
+          <Image src="/assets/LogoNoBgTextWhite.png" alt="Tidy Mimo Logo" width={130} height={35} className="logo-dark object-contain" priority style={{ height: 'auto' }} />
           <p className="text-sm leading-relaxed max-w-xs">
             Your Active Cleaning Partner. Delivering powerful solutions for households, industries, and commercial spaces.
           </p>
@@ -52,31 +52,21 @@ export default function Footer() {
 
         <div className="flex flex-col gap-6">
           <h4 className="text-text-primary text-lg font-bold tracking-tight">Contact</h4>
-          <a 
-            href="https://www.google.com/maps/place/Verdindies+Biotech+Industries+Pvt+Ltd/@11.1227193,76.1189432,17z/data=!3m1!4b1!4m6!3m5!1s0x3ba63715d94adb11:0xc5a850446e02b5ac!8m2!3d11.122714!4d76.1215181!16s%2Fg%2F11rxhwkzwn?authuser=0&entry=ttu&g_ep=EgoyMDI2MDMzMC4wIKXMDSoASAFQAw%3D%3D"
-            target="_blank"
-            rel="noreferrer"
-            className="block text-sm border-l-2 border-primary-pink/20 pl-4 leading-relaxed hover:text-primary-pink hover:border-primary-pink transition-all"
-          >
+          <p className="text-sm border-l-2 border-primary-pink/20 pl-4 leading-relaxed">
             Verdindies Biotech Industries<br />
             Kerala, India – PIN 676126
+          </p>
+          <a href="mailto:info@tidymimo.com" className="w-fit text-primary-pink font-bold hover:underline transition-all">
+            info@tidymimo.com
           </a>
-          <div className="flex flex-col gap-2">
-            <a href="mailto:info@tidymimo.com" className="w-fit text-primary-pink font-bold hover:underline transition-all">
-              info@tidymimo.com
-            </a>
-            <a href="https://wa.me/918593940001" target="_blank" rel="noreferrer" className="w-fit text-primary-pink font-bold hover:underline transition-all">
-              +91 85 93 94 00 01
-            </a>
-          </div>
         </div>
       </div>
 
-      <div className="container  border-t border-glass-border flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
-        <p className="text-xs font-medium pt-14">
+      <div className="container  max-w-[1300px]  border-t border-glass-border pt-8 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
+        <p className="text-xs font-medium pt-10">
           &copy; {new Date().getFullYear()} Tidy Mimo. All rights reserved.
         </p>
-        <p className="text-sm pt-14 text-text-primary font-black tracking-tight italic">
+        <p className="text-sm text-text-primary pt-10 font-black tracking-tight italic">
           "Cleanliness is not just a routine."
         </p>
       </div>

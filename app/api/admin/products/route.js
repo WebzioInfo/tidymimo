@@ -22,7 +22,7 @@ export async function POST(request) {
 
   try {
     const body = await request.json();
-    const { name, category, features, description, imageUrl, slug, inStock, sortOrder } = body;
+    const { name, category, features, description, imageUrl, slug, inStock, sortOrder, unit, quantity } = body;
 
     if (!name || !category || !description || !imageUrl) {
       return NextResponse.json({ error: 'name, category, description, imageUrl are required.' }, { status: 400 });
@@ -35,6 +35,8 @@ export async function POST(request) {
         features: Array.isArray(features) ? features : [],
         description,
         imageUrl,
+        unit: unit || null,
+        quantity: quantity || null,
         slug: slug || null,
         inStock: inStock !== undefined ? inStock : true,
         sortOrder: sortOrder || 0,
