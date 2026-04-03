@@ -20,7 +20,7 @@ export default function About() {
         </div>
 
         {/* Simple Design Accent: Abstract Ring */}
-        <div className="absolute bottom-[15%] left-[10%] w-[120px] h-[120px] rounded-full border border-dashed border-primary-purple opacity-30" />
+        {/* <div className="absolute bottom-[15%] left-[10%] w-[120px] h-[120px] rounded-full border border-dashed border-primary-purple opacity-30" /> */}
 
         <div className="relative z-10 text-center px-[5%]">
           <h1 className="text-[clamp(4rem,8vw,8rem)] text-text-primary m-0 tracking-[-0.04em] leading-none font-clash">
