@@ -9,6 +9,7 @@ import { useGSAP } from '@gsap/react';
 import { ShieldCheck, Sparkles, Droplets, Tag, ArrowRight, CheckCircle2, Star, TrendingUp, Users, Factory } from 'lucide-react';
 import HeroScene from './components/HeroScene';
 import ProblemSolutionCard from './components/ProblemSolutionCard';
+import FeaturedProductsBento from './components/FeaturedProductsBento';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -133,6 +134,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* 1.7 Premium Featured Products */}
+      <FeaturedProductsBento />
 
       {/* 2. Why Choose Tidymimo (Tinted Alternate Background) */}
       <section className="py-24 md:py-36 px-[5%] reveal-section bg-bg-tint border-y border-white/30">
