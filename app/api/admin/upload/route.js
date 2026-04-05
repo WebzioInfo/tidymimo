@@ -1,6 +1,15 @@
 import { NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
+import { v2 as cloudinary } from 'cloudinary';
+
+if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+  console.error('[UPLOAD CONFIG ERROR]: Missing environment variables.');
+}
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function POST(req) {
   try {
@@ -14,26 +23,28 @@ export async function POST(req) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Create unique filename
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Date.now()}.${fileExt}`;
-    
-    // Ensure uploads directory exists
-    const uploadDir = join(process.cwd(), 'public', 'uploads');
-    try {
-      await mkdir(uploadDir, { recursive: true });
-    } catch (e) {
-      // Ignore if directory already exists
-    }
+    const uploadResult = await new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        { folder: 'tidymimo_products' },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
+      uploadStream.end(buffer);
+    });
 
-    const filePath = join(uploadDir, fileName);
-    await writeFile(filePath, buffer);
-
-    const imageUrl = `/uploads/${fileName}`;
-    
-    return NextResponse.json({ url: imageUrl });
+    return NextResponse.json({ url: uploadResult.secure_url });
   } catch (err) {
-    console.error('[UPLOAD API]', err);
-    return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
+    console.error('[UPLOAD API ERROR]:', {
+      message: err.message,
+      http_code: err.http_code,
+      error_detail: err.error,
+      stack: err.stack
+    });
+    return NextResponse.json({ 
+      error: err.message || 'Upload failed',
+      detail: err.error?.message || null 
+    }, { status: 500 });
   }
 }
